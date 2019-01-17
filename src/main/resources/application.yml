@@ -1,0 +1,66 @@
+######################## 配置spring的基本信息#######################################
+spring:
+  http:
+    encoding:                # 配置POST中文乱码
+      charset: UTF-8
+      enabled: true
+      force: true
+
+  servlet:
+    multipart:
+      max-file-size: 200MB   # 限制一次上传的单个文件的总大小 ，单位可以是KB和MB
+      max-request-size: 500MB   # 限制一次上传的所有文件的总大小
+
+      
+      
+############################## server的配置信息 ###################################
+server:
+  port: 8080                    # 配置访问的端口号
+  servlet:
+    context-path: /demo-server   # 配置发布的项目名称
+  tomcat:
+    uri-encoding: UTF-8         #配置tomcat的编码格式，用于处理get请求的乱码问题
+    
+
+######################### mybatis的配置信息  ##################################################################################################
+
+#mybatis:
+#  # 指定mapper配置文件的位置
+#  mapper-locations: classpath:/mappers/*.xml
+#  configuration:
+#    map-underscore-to-camel-case: true   # 启用驼峰方式
+
+######################### 上传文件路径的配置信息 #################################################
+#file:
+#  config:
+#    uploadPath: /usr/share/nginx/html/www/blue-upload/
+#    uploadUrl: http://www.m-scor.com/blue-upload/
+
+######################### JWT的配置信息 #################################################
+
+#jwt: # JWT的配置
+#  config:
+#    secret: demo   ## 秘钥，相当于盐
+#    expire: 3600000  ## 过期时间1个小时，单位毫秒
+    
+    
+######################### 项目用到的的配置信息 #################################################
+#system:
+#  config:
+#    redis:
+#      sms-key: code_%s
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

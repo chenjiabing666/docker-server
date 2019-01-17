@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.2.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>cn.tedu.demo</groupId>
+	<artifactId>demo-docker</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>demo-docker</name>
+	<description>Demo project for Spring Boot</description>
+
+	<properties>
+		<java.version>1.8</java.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+
+	<build>
+		<finalName>demo-server</finalName>
+		<plugins>
+			<!-- springBoot的maven打包插件 -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.4.13</version>
+				
+				<!-- 将docker:build这个动作绑定在package这个动作上，只要maven install 即可上传到远程服务器 -->
+				<executions>
+					<execution>
+						<id>build-image</id>
+						<phase>package</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+				</executions>
+				
+				<configuration>
+					
+					<!-- 指定镜像的名称+版本，必须是满足[a-z,0-9]这个正则才行 -->
+					<imageName>${project.artifactId}:${project.version}</imageName>
+					
+					<!-- 覆盖相同标签镜像 -->
+					<forceTags>true</forceTags>
+					
+					<!-- 指定Dockerfile的文件位置 -->
+					<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+					
+					<!-- 指定Dockerfile的文件位置 -->
+					<dockerHost>http://39.105.123.197:2375</dockerHost>
+					
+					<!-- 指定jar包所在的位置 -->
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+					</resources>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
